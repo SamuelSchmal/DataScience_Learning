@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pandas & Data Science — Learning Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #f5f3ee;
+    --white:   #ffffff;
+    --ink:     #1a1a1a;
+    --muted:   #888;
+    --rule:    #e0dbd2;
+
+    --p1: #1a56b0;  /* Phase 1 — blue */
+    --p2: #0e7a5a;  /* Phase 2 — green */
+    --p3: #b05c1a;  /* Phase 3 — amber */
+    --p4: #7c2d9c;  /* Phase 4 — purple */
+
+    --p1-lt: #eef4fc;
+    --p2-lt: #edf7f2;
+    --p3-lt: #fdf3e8;
+    --p4-lt: #f7eefa;
+
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans:  'Syne', system-ui, sans-serif;
+    --mono:  'IBM Plex Mono', monospace;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    font-family: var(--serif);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 72px 48px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,86,176,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7ba8e8;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span { color: #7ba8e8; }
+
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: #aaa;
+    max-width: 580px;
+    font-family: var(--serif);
+    font-style: italic;
+  }
+
+  /* Stats row */
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid #333;
+    padding-top: 28px;
+  }
+
+  .stat {
+    padding-right: 40px;
+    margin-right: 40px;
+    border-right: 1px solid #333;
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-n {
+    font-family: var(--sans);
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  /* ── YOU ARE HERE ── */
+  .already {
+    background: #fff;
+    border-left: 4px solid var(--p2);
+    padding: 24px 32px;
+    margin: 0 auto;
+    max-width: 900px;
+    margin-top: 48px;
+    margin-bottom: 8px;
+  }
+
+  .already h3 {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--p2);
+    margin-bottom: 8px;
+  }
+
+  .already p { font-size: 15px; color: #444; }
+  .already strong { color: var(--ink); font-weight: 600; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* Phase block */
+  .phase {
+    margin-top: 64px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .phase-num {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .p1 .phase-num { background: var(--p1-lt); color: var(--p1); }
+  .p2 .phase-num { background: var(--p2-lt); color: var(--p2); }
+  .p3 .phase-num { background: var(--p3-lt); color: var(--p3); }
+  .p4 .phase-num { background: var(--p4-lt); color: var(--p4); }
+
+  .phase-title {
+    font-family: var(--sans);
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .phase-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .phase-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* Lesson cards */
+  .lessons { display: flex; flex-direction: column; gap: 2px; }
+
+  .lesson {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+
+  .lesson:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+  .lesson-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 20px;
+    font-weight: 800;
+    color: #ddd;
+    border-right: 1px solid var(--rule);
+    flex-shrink: 0;
+    letter-spacing: -0.03em;
+  }
+
+  .p1 .lesson-num { background: var(--p1-lt); color: var(--p1); border-color: #c8dcf5; }
+  .p2 .lesson-num { background: var(--p2-lt); color: var(--p2); border-color: #b8e8d4; }
+  .p3 .lesson-num { background: var(--p3-lt); color: var(--p3); border-color: #f5d9b8; }
+  .p4 .lesson-num { background: var(--p4-lt); color: var(--p4); border-color: #dcc8f0; }
+
+  .lesson-body { padding: 20px 24px; }
+
+  .lesson-title {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .lesson-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .ltag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+  }
+
+  .ltag.hl { color: var(--p1); border-color: #c8dcf5; background: var(--p1-lt); }
+  .p2 .ltag.hl { color: var(--p2); border-color: #b8e8d4; background: var(--p2-lt); }
+  .p3 .ltag.hl { color: var(--p3); border-color: #f5d9b8; background: var(--p3-lt); }
+  .p4 .ltag.hl { color: var(--p4); border-color: #dcc8f0; background: var(--p4-lt); }
+
+  .lesson-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.65;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  .lesson-covers h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .lesson-covers ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .lesson-covers ul li {
+    font-size: 13.5px;
+    color: #444;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .lesson-covers ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 11px;
+    top: 1px;
+  }
+
+  .lesson-prompt {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #f8f7f4;
+    border-left: 3px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .lesson-prompt strong {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  /* Checkpoint */
+  .checkpoint {
+    margin-top: 24px;
+    padding: 20px 24px;
+    border: 1px dashed var(--rule);
+    background: var(--bg);
+    font-size: 14px;
+    color: #555;
+  }
+
+  .checkpoint strong {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .p1 .checkpoint strong { color: var(--p1); }
+  .p2 .checkpoint strong { color: var(--p2); }
+  .p3 .checkpoint strong { color: var(--p3); }
+  .p4 .checkpoint strong { color: var(--p4); }
+
+  /* How to use section */
+  .howto {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    margin: 48px 0 0;
+  }
+
+  .howto h2 {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .howto ol {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .howto ol li { font-size: 14px; color: #444; line-height: 1.65; }
+  .howto ol li strong { color: var(--ink); font-family: var(--sans); font-size: 13px; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 24px 40px; }
+    .stat { padding-right: 20px; margin-right: 20px; }
+    .lesson { grid-template-columns: 48px 1fr; }
+    main { padding: 0 16px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Samuel Schmal · Learning Plan 2025</div>
+  <h1>Pandas & <span>Data Science</span><br>from Zero to Job-Ready</h1>
+  <p class="hero-sub">Each lesson is a self-contained Jupyter notebook (~1 hour). Generate it from AI using the prompt at the bottom of each card.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">28</div><div class="stat-label">Notebooks</div></div>
+    <div class="stat"><div class="stat-n">4</div><div class="stat-label">Phases</div></div>
+    <div class="stat"><div class="stat-n">~28h</div><div class="stat-label">Total time</div></div>
+    <div class="stat"><div class="stat-n">1</div><div class="stat-label">Real project / phase</div></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ALREADY KNOW -->
+  <div class="already">
+    <h3>✓ You already know this — skip it</h3>
+    <p>Based on your notebook: <strong>pd.read_csv, Series, DataFrames, describe(), value_counts(), filtering, sorting, missing values, loc/iloc, GroupBy, Decision Trees, Random Forests, MAE, cross-validation, correlation, feature importance.</strong> The plan starts where you left off.</p>
+  </div>
+
+  <!-- How to use -->
+  <div class="howto">
+    <h2>How to use this plan</h2>
+    <ol>
+      <li><strong>One notebook per session.</strong> Open Jupyter or VS Code, create a new .ipynb, paste the AI prompt at the bottom of the card, and work through the generated notebook.</li>
+      <li><strong>Don't just run cells — edit them.</strong> Change numbers, break things, fix them. The learning is in the friction.</li>
+      <li><strong>Commit every notebook to GitHub</strong> after you finish. Use a clear name like <code>05_feature_engineering.ipynb</code>. This builds your streak and your portfolio simultaneously.</li>
+      <li><strong>At the end of each Phase</strong>, there's a mini-project. These are the ones you put in your pinned repos.</li>
+      <li><strong>Suggested pace:</strong> 3–4 notebooks per week = full plan in ~8 weeks.</li>
+    </ol>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       PHASE 1 — PANDAS MASTERY
+  ══════════════════════════════════════ -->
+  <div class="phase p1">
+    <div class="phase-header">
+      <div class="phase-num">Phase 1</div>
+      <div>
+        <div class="phase-title">Pandas Mastery</div>
+        <div class="phase-meta">7 notebooks · ~7 hours · foundation for everything else</div>
+      </div>
+      <div class="phase-rule"></div>
+    </div>
+
+    <div class="lessons">
+
+      <div class="lesson p1">
+        <div class="lesson-num">01</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Reshaping Data — pivot, melt, stack, unstack</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">pandas</span>
+            <span class="ltag">reshaping</span>
+            <span class="ltag">pivot tables</span>
+          </div>
+          <div class="lesson-desc">Real data rarely arrives in the shape you need. This lesson teaches you to rotate, flatten and restructure DataFrames — skills used in nearly every project.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li><code>df.pivot_table()</code> — like an Excel pivot, but in code</li>
+              <li><code>df.melt()</code> — wide format → long format (essential for plotting)</li>
+              <li><code>df.stack()</code> / <code>df.unstack()</code> — multi-level index manipulation</li>
+              <li><code>pd.crosstab()</code> — frequency tables between two categorical columns</li>
+              <li>Real exercise: reshape a sales dataset from wide to long, then summarise by category</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 01 — Reshaping Data in Pandas". Use the Titanic dataset (load via seaborn: sns.load_dataset('titanic')). Teach pivot_table, melt, stack/unstack, and crosstab with clear markdown explanations before each code cell. Include a final exercise: reshape the dataset from wide to long format and compute survival rate by sex and class using a pivot table.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p1">
+        <div class="lesson-num">02</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Merging & Joining DataFrames</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">pandas</span>
+            <span class="ltag">merge</span>
+            <span class="ltag">SQL joins</span>
+          </div>
+          <div class="lesson-desc">Almost every real project involves combining data from multiple sources. This is the Pandas equivalent of SQL JOINs — a daily-use skill.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li><code>pd.merge()</code> — inner, left, right, outer joins</li>
+              <li><code>df.join()</code> — joining on index</li>
+              <li><code>pd.concat()</code> — stacking DataFrames vertically or horizontally</li>
+              <li>Handling duplicate columns after merge (<code>suffixes</code>)</li>
+              <li>Diagnosing bad merges: row count checks, missing keys, many-to-many explosions</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 02 — Merging and Joining DataFrames". Generate two synthetic DataFrames: one with customer orders and one with customer demographics. Demonstrate inner, left, right and outer joins using pd.merge(), explain what rows are lost/gained in each. Show pd.concat() for stacking. Include a section on diagnosing merge problems (row count before vs after, checking for NaNs introduced by a left join).
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p1">
+        <div class="lesson-num">03</div>
+        <div class="lesson-body">
+          <div class="lesson-title">String & Datetime Operations</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">pandas</span>
+            <span class="ltag">str accessor</span>
+            <span class="ltag">datetime</span>
+          </div>
+          <div class="lesson-desc">Most real datasets have messy text and date columns. This lesson gives you the tools to clean, parse, and extract features from both.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li><code>.str.lower()</code>, <code>.str.strip()</code>, <code>.str.replace()</code>, <code>.str.contains()</code> — text cleaning</li>
+              <li><code>.str.extract()</code> with regex — pull structured data out of free text</li>
+              <li><code>pd.to_datetime()</code> — parsing date strings</li>
+              <li><code>.dt.year</code>, <code>.dt.month</code>, <code>.dt.dayofweek</code>, <code>.dt.hour</code> — datetime feature extraction</li>
+              <li>Calculating time deltas: days between two dates</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 03 — String and Datetime Operations in Pandas". Generate a synthetic e-commerce dataset with columns: order_id, customer_name (messy case), product_description (free text), order_date (string), delivery_date (string). Teach str accessor methods for cleaning, str.extract with regex to pull a product category from description, pd.to_datetime for parsing, and dt accessor to extract year/month/day. Final exercise: compute average delivery time in days per product category.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p1">
+        <div class="lesson-num">04</div>
+        <div class="lesson-body">
+          <div class="lesson-title">apply(), map() and Custom Transformations</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">pandas</span>
+            <span class="ltag">apply</span>
+            <span class="ltag">lambda</span>
+            <span class="ltag">performance</span>
+          </div>
+          <div class="lesson-desc">When built-in methods aren't enough, apply() lets you run any Python function row-by-row or column-by-column. This lesson also teaches you when NOT to use it (vectorization is faster).</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li><code>Series.map()</code> — element-wise mapping with dict or function</li>
+              <li><code>Series.apply()</code> vs <code>DataFrame.apply()</code> — differences and use cases</li>
+              <li>Lambda functions with apply — quick one-liners</li>
+              <li><code>np.where()</code> and <code>pd.cut()</code> — faster alternatives to apply for conditionals</li>
+              <li>Performance: measuring apply vs vectorized operations with <code>%timeit</code></li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 04 — apply(), map() and Custom Transformations". Use the California Housing dataset (sklearn). Demonstrate: Series.map() with a dict to label income brackets, Series.apply() with a lambda, DataFrame.apply() across rows. Then show the same operations done faster with np.where() and pd.cut(). Include a %timeit comparison showing why vectorization is preferred. End with a note on when apply() is unavoidable (complex multi-column logic).
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p1">
+        <div class="lesson-num">05</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Advanced GroupBy — transform, agg, named aggregations</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">pandas</span>
+            <span class="ltag">groupby</span>
+            <span class="ltag">transform</span>
+          </div>
+          <div class="lesson-desc">You know basic GroupBy. This lesson covers the patterns used daily in professional data work — especially transform(), which is used to create features relative to a group.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Named aggregations with <code>.agg(new_name=('col', 'func'))</code></li>
+              <li><code>groupby().transform()</code> — compute group stats but keep original row count</li>
+              <li><code>groupby().filter()</code> — keep only groups meeting a condition</li>
+              <li><code>groupby().apply()</code> — custom function per group</li>
+              <li>Common pattern: "deviation from group mean" feature engineering with transform</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 05 — Advanced GroupBy in Pandas". Use a synthetic retail sales dataset (product, category, region, sales, date). Demonstrate: named aggregations, groupby().transform() to add a 'sales_vs_category_mean' column (deviation from group mean — a common feature engineering trick), groupby().filter() to keep only categories with more than 100 sales, groupby().apply() with a custom function. Include clear explanations of why transform() preserves row count while agg() collapses it.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p1">
+        <div class="lesson-num">06</div>
+        <div class="lesson-body">
+          <div class="lesson-title">MultiIndex & Advanced Indexing</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">pandas</span>
+            <span class="ltag">multiindex</span>
+            <span class="ltag">indexing</span>
+          </div>
+          <div class="lesson-desc">When data has multiple levels of hierarchy (country → city → store), MultiIndex is the right tool. Many Kaggle datasets and APIs return data in this structure.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Creating MultiIndex with <code>set_index()</code> and after <code>groupby()</code></li>
+              <li>Selecting with <code>.loc[]</code> on a MultiIndex</li>
+              <li><code>xs()</code> — cross-section selection</li>
+              <li><code>reset_index()</code> — flatten back to regular DataFrame</li>
+              <li><code>swaplevel()</code> and <code>sort_index()</code></li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 06 — MultiIndex and Advanced Indexing in Pandas". Generate a synthetic dataset of sales by country, city, and product category. Show how groupby creates a MultiIndex result. Teach .loc[] selection at each level, xs() for cross-sections, swaplevel(), sort_index(), and reset_index() to flatten. Include a practical exercise: given a MultiIndex DataFrame, extract all sales for a specific country and compute each city's share of that country's total.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p1">
+        <div class="lesson-num">07</div>
+        <div class="lesson-body">
+          <div class="lesson-title">⚑ Phase 1 Project — EDA on a Real Dataset</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">project</span>
+            <span class="ltag">EDA</span>
+            <span class="ltag">portfolio</span>
+          </div>
+          <div class="lesson-desc">Combine everything from Phase 1 into a complete exploratory analysis. This is the notebook you push to GitHub as your first pinned portfolio piece.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Dataset: Brazilian E-Commerce (Olist) from Kaggle — multiple CSVs, real merging needed</li>
+              <li>Full pipeline: load → clean → merge → reshape → GroupBy analysis → insights</li>
+              <li>Write 3 business questions before you start, answer them with data</li>
+              <li>Markdown cells explaining every decision — pretend a recruiter is reading it</li>
+              <li>Push to GitHub with a README that summarises your findings in 3 bullet points</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Project 1 — Brazilian E-Commerce EDA (Olist Dataset)". Structure it as: (1) Introduction with 3 business questions, (2) Data loading and merging of multiple CSVs using pd.merge(), (3) Data cleaning with string/datetime operations, (4) Exploratory analysis using GroupBy, pivot_table, and reshaping to answer each business question, (5) Key findings summary. Include placeholder markdown cells where I should write my own interpretations. Use the Olist dataset available on Kaggle (kaggle datasets download -d olistbr/brazilian-ecommerce).
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="checkpoint p1">
+      <strong>Phase 1 checkpoint — before moving on, you should be able to:</strong>
+      Merge two DataFrames correctly and diagnose merge problems · Reshape data between wide and long formats · Extract features from text and dates · Use transform() to create group-relative features · Complete an EDA from raw CSVs to written insights without Googling the Pandas docs.
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       PHASE 2 — VISUALISATION & EDA
+  ══════════════════════════════════════ -->
+  <div class="phase p2">
+    <div class="phase-header">
+      <div class="phase-num">Phase 2</div>
+      <div>
+        <div class="phase-title">Visualisation & Storytelling</div>
+        <div class="phase-meta">6 notebooks · ~6 hours · the skill recruiters see most</div>
+      </div>
+      <div class="phase-rule"></div>
+    </div>
+
+    <div class="lessons">
+
+      <div class="lesson p2">
+        <div class="lesson-num">08</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Matplotlib — Full Control of a Figure</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">matplotlib</span>
+            <span class="ltag">figures</span>
+            <span class="ltag">subplots</span>
+          </div>
+          <div class="lesson-desc">Matplotlib is the engine underneath every Python plotting library. Understanding it gives you full control when higher-level libraries fall short.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Figure / Axes architecture — the difference between <code>plt.plot()</code> and <code>ax.plot()</code></li>
+              <li><code>plt.subplots()</code> — multiple panels in one figure</li>
+              <li>Titles, labels, legends, tick formatting</li>
+              <li>Saving figures to file at publication quality (<code>savefig</code>, dpi)</li>
+              <li>Styling: rcParams, custom color palettes, annotating data points</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 08 — Matplotlib: Full Control of a Figure". Use the California Housing dataset. Teach the Figure/Axes object model (ax = fig.add_subplot vs plt shorthand). Show: subplots with 2x2 grid, custom titles/labels/legends, tick formatting, annotating a specific data point on a scatter plot, and saving the final figure as a PNG at 150 dpi. Final exercise: create a 1x3 figure comparing distributions of 3 features side-by-side.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p2">
+        <div class="lesson-num">09</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Seaborn — Statistical Visualisation</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">seaborn</span>
+            <span class="ltag">distributions</span>
+            <span class="ltag">categorical</span>
+          </div>
+          <div class="lesson-desc">Seaborn turns one-liners into publication-quality statistical charts. This is what you'll use for 80% of EDA visualisations.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Distribution plots: <code>histplot</code>, <code>kdeplot</code>, <code>ecdfplot</code></li>
+              <li>Categorical: <code>boxplot</code>, <code>violinplot</code>, <code>stripplot</code>, <code>barplot</code></li>
+              <li>Relational: <code>scatterplot</code>, <code>lineplot</code> with confidence intervals</li>
+              <li><code>heatmap()</code> for correlation matrices</li>
+              <li><code>pairplot()</code> — overview of all feature relationships at once</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 09 — Seaborn: Statistical Visualisation". Use the Titanic dataset (sns.load_dataset). Cover: histplot and kdeplot for distributions, boxplot and violinplot comparing survival by class, scatterplot with hue, heatmap of correlation matrix, and pairplot. For each chart type, show 2 versions: a default one and an improved one with better color, labels and title. End with a section on when to use each chart type.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p2">
+        <div class="lesson-num">10</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Plotly — Interactive Visualisation</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">plotly</span>
+            <span class="ltag">interactive</span>
+            <span class="ltag">plotly express</span>
+          </div>
+          <div class="lesson-desc">Interactive charts let readers explore data themselves — which is what stakeholders and recruiters remember. Plotly Express makes this shockingly easy.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Plotly Express basics — scatter, line, bar, histogram, box in one line</li>
+              <li>Adding color, size, hover data</li>
+              <li>Animated charts with <code>animation_frame</code></li>
+              <li>Maps with <code>px.scatter_geo</code> (great for Brazilian state data)</li>
+              <li>Exporting to HTML for sharing (self-contained, no server needed)</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 10 — Plotly: Interactive Visualisation". Use a dataset with geographic data (gapminder from plotly or Brazilian states data). Cover plotly.express basics, scatter with color/size/hover, an animated bubble chart over time, and a choropleth map of Brazil. Show how to export a chart as a standalone HTML file. End with a comparison: when to use static (Matplotlib/Seaborn) vs interactive (Plotly).
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p2">
+        <div class="lesson-num">11</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Visualising Distributions & Outliers</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">EDA</span>
+            <span class="ltag">outliers</span>
+            <span class="ltag">distributions</span>
+          </div>
+          <div class="lesson-desc">Before modelling, you must understand the shape of your data. This lesson teaches systematic techniques for detecting problems that kill model performance.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Visualising skewness: when to apply log transform</li>
+              <li>IQR method for outlier detection vs Z-score method</li>
+              <li>Visualising outliers: boxplots, scatter plots, histograms with log scale</li>
+              <li>Deciding what to do: cap, remove, or keep outliers (with reasoning)</li>
+              <li>QQ-plot: checking if a distribution is normal</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 11 — Visualising Distributions and Outliers". Use the California Housing dataset plus an added synthetic column with severe outliers. Cover: histograms showing skewness, log transformation to fix it, IQR method to detect outliers, Z-score method, visualising outliers with boxplots and scatter, and a QQ-plot with scipy.stats to check normality. Include a decision framework section: when to remove vs cap vs transform outliers.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p2">
+        <div class="lesson-num">12</div>
+        <div class="lesson-body">
+          <div class="lesson-title">EDA Workflow — From Raw Data to Insights</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">EDA</span>
+            <span class="ltag">workflow</span>
+            <span class="ltag">systematic</span>
+          </div>
+          <div class="lesson-desc">A systematic EDA checklist used by professional data scientists. This becomes your template for every new dataset you encounter.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Step 1: Shape, dtypes, memory usage, sample rows</li>
+              <li>Step 2: Missing values — count, pattern, visualise with heatmap</li>
+              <li>Step 3: Numeric distributions — describe + histograms + outlier flags</li>
+              <li>Step 4: Categorical distributions — value_counts + bar charts</li>
+              <li>Step 5: Relationships — correlation heatmap + target correlation + pairplot</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 12 — Systematic EDA Workflow". Use the Ames Housing dataset (available via sklearn or seaborn). Structure the notebook as a repeatable 5-step EDA checklist: (1) Overview, (2) Missing values with a missingno heatmap, (3) Numeric distributions, (4) Categorical distributions, (5) Feature-target relationships. At the end, write a template function called quick_eda(df, target_col) that runs the entire checklist for any DataFrame.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p2">
+        <div class="lesson-num">13</div>
+        <div class="lesson-body">
+          <div class="lesson-title">⚑ Phase 2 Project — Visual Story from a Public Dataset</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">project</span>
+            <span class="ltag">storytelling</span>
+            <span class="ltag">portfolio</span>
+          </div>
+          <div class="lesson-desc">Build a notebook that tells a story using only charts. Think data journalism — a reader should understand your conclusions without reading any code.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Dataset: ENEM scores by state/region (Brazilian public dataset) or World Happiness Report</li>
+              <li>3–5 visualisations that build a narrative arc</li>
+              <li>Every chart has a title that states the conclusion, not just the variable name</li>
+              <li>Final markdown cell: a 5-sentence summary a non-technical person could read</li>
+              <li>Export one interactive Plotly chart as standalone HTML to share</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Project 2 — Visual Story: ENEM Performance by Region". Structure it as a data journalism piece: (1) Introduction — the question being asked, (2) 5 visualisations using Seaborn and Plotly that each have a headline-style title stating the finding, (3) Each chart followed by a markdown paragraph explaining what it means, (4) A conclusion section with 5-sentence plain-language summary. Use the ENEM microdata (available at dados.gov.br) or, if unavailable, use the World Happiness Report from Kaggle as alternative.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="checkpoint p2">
+      <strong>Phase 2 checkpoint — before moving on, you should be able to:</strong>
+      Build a multi-panel Matplotlib figure from scratch · Explain which Seaborn chart type fits which question · Make an interactive Plotly chart and export it · Detect outliers programmatically and decide what to do with them · Complete a full EDA using the 5-step checklist without looking at notes.
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       PHASE 3 — MACHINE LEARNING
+  ══════════════════════════════════════ -->
+  <div class="phase p3">
+    <div class="phase-header">
+      <div class="phase-num">Phase 3</div>
+      <div>
+        <div class="phase-title">Machine Learning in Practice</div>
+        <div class="phase-meta">9 notebooks · ~9 hours · the core of data science interviews</div>
+      </div>
+      <div class="phase-rule"></div>
+    </div>
+
+    <div class="lessons">
+
+      <div class="lesson p3">
+        <div class="lesson-num">14</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Feature Engineering — Creating Better Inputs</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">feature engineering</span>
+            <span class="ltag">sklearn</span>
+          </div>
+          <div class="lesson-desc">Feature engineering — creating new inputs from raw data — is consistently the highest-leverage activity in ML. This is where your math background becomes a genuine advantage.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Ratios and interactions between columns</li>
+              <li>Binning continuous variables (<code>pd.cut</code>, <code>pd.qcut</code>)</li>
+              <li>Lag features and rolling statistics for time series</li>
+              <li>Target encoding — encoding categories with the mean of the target</li>
+              <li>Polynomial features with <code>sklearn.preprocessing.PolynomialFeatures</code></li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 14 — Feature Engineering". Use the California Housing dataset. Demonstrate: creating ratio features (rooms/bedroom, income/occupant), binning with pd.cut and pd.qcut, target encoding of a categorical feature using groupby mean, and PolynomialFeatures from sklearn. For each technique, train a Random Forest before and after, measure MAE improvement with cross_val_score, and explain why the feature helped or didn't help.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">15</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Preprocessing Pipelines with sklearn</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">sklearn</span>
+            <span class="ltag">Pipeline</span>
+            <span class="ltag">ColumnTransformer</span>
+          </div>
+          <div class="lesson-desc">Pipelines eliminate data leakage and make your code reproducible. Every professional ML project uses them. This is one of the most asked-about topics in DS interviews.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li><code>Pipeline</code> — chaining transformers and a model into one object</li>
+              <li><code>ColumnTransformer</code> — applying different transforms to numeric vs categorical columns</li>
+              <li><code>SimpleImputer</code> — filling missing values correctly inside a pipeline</li>
+              <li><code>StandardScaler</code> and <code>OneHotEncoder</code></li>
+              <li>Why pipelines prevent data leakage (fitting the scaler only on train data)</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 15 — Sklearn Pipelines and ColumnTransformer". Use the Titanic dataset (has both numeric and categorical columns plus missing values). Build a full Pipeline with: ColumnTransformer that applies SimpleImputer+StandardScaler to numeric columns, and SimpleImputer+OneHotEncoder to categorical. Add a RandomForestClassifier at the end. Explain data leakage with a clear example of what goes wrong when you fit a scaler on the full dataset vs inside a pipeline.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">16</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Classification Metrics — Beyond Accuracy</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">classification</span>
+            <span class="ltag">metrics</span>
+            <span class="ltag">precision/recall</span>
+          </div>
+          <div class="lesson-desc">Accuracy is misleading on imbalanced data. This lesson teaches the metrics that actually matter — and when to use each one. Essential for interviews.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Confusion matrix — the foundation of all classification metrics</li>
+              <li>Precision, Recall, F1-score — when each matters more</li>
+              <li>ROC-AUC — measuring discriminative ability across all thresholds</li>
+              <li>Precision-Recall curve — better than ROC for imbalanced classes</li>
+              <li>Class imbalance strategies: class_weight, oversampling, undersampling</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 16 — Classification Metrics Beyond Accuracy". Create a synthetic binary classification dataset with 90/10 class imbalance. Show why accuracy is misleading (a model that always predicts majority class gets 90% accuracy). Teach: confusion matrix with seaborn heatmap, precision/recall/F1 with their formulas, ROC curve and AUC, Precision-Recall curve. Show how class_weight='balanced' in RandomForestClassifier improves recall. Include a decision guide: when to optimise for precision vs recall vs AUC.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">17</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Hyperparameter Tuning — GridSearch & RandomizedSearch</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">sklearn</span>
+            <span class="ltag">hyperparameters</span>
+            <span class="ltag">GridSearchCV</span>
+          </div>
+          <div class="lesson-desc">Models have knobs (hyperparameters) that control their behaviour. Systematic tuning is what separates a polished Kaggle notebook from a quick experiment.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>What are hyperparameters vs parameters?</li>
+              <li><code>GridSearchCV</code> — exhaustive search over a parameter grid</li>
+              <li><code>RandomizedSearchCV</code> — faster random sampling of the grid</li>
+              <li>Nested cross-validation to avoid overfitting the hyperparameters</li>
+              <li>Reading a <code>cv_results_</code> DataFrame to understand the search</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 17 — Hyperparameter Tuning with GridSearch and RandomizedSearch". Use the California Housing dataset. Tune a RandomForestRegressor using GridSearchCV on a small grid (n_estimators, max_depth, min_samples_split). Then demonstrate RandomizedSearchCV on a larger grid showing it finds similar results faster. Show how to convert cv_results_ to a DataFrame, visualise how MAE changes with n_estimators, and explain nested cross-validation conceptually with a diagram.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">18</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Gradient Boosting — XGBoost & LightGBM</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">XGBoost</span>
+            <span class="ltag">LightGBM</span>
+            <span class="ltag">boosting</span>
+          </div>
+          <div class="lesson-desc">Gradient boosting models win most Kaggle tabular competitions. Understanding them conceptually (not just calling .fit()) is what your math background enables.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Boosting vs bagging — intuition for how they differ from Random Forest</li>
+              <li>Key parameters: <code>n_estimators</code>, <code>learning_rate</code>, <code>max_depth</code>, <code>subsample</code></li>
+              <li>Early stopping to prevent overfitting</li>
+              <li>Feature importance from XGBoost (gain, weight, cover)</li>
+              <li>LightGBM — why it's faster and when to prefer it</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 18 — Gradient Boosting: XGBoost and LightGBM". Use the Ames Housing dataset. Start with an intuitive explanation of boosting (each tree corrects the errors of the previous one). Show XGBRegressor with early stopping, compare feature importances (gain vs weight vs cover), then train LightGBMRegressor on the same data and compare MAE and training speed. End with a comparison table: Random Forest vs XGBoost vs LightGBM — when to use each.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">19</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Handling Imbalanced Data & Real-World Problems</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">imbalanced</span>
+            <span class="ltag">SMOTE</span>
+            <span class="ltag">real-world</span>
+          </div>
+          <div class="lesson-desc">Fraud detection, churn prediction, rare disease classification — all have imbalanced classes. This lesson covers the practical toolkit used in industry.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Undersampling: <code>RandomUnderSampler</code></li>
+              <li>Oversampling: <code>SMOTE</code> — synthetic minority oversampling</li>
+              <li>Class weights vs resampling — tradeoffs</li>
+              <li>Threshold adjustment: moving the decision boundary</li>
+              <li>Evaluating imbalanced models: why to use F1/PR-AUC not ROC-AUC</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 19 — Handling Imbalanced Data". Use the credit card fraud dataset (sklearn.datasets.make_classification with weights=[0.99, 0.01]). Demonstrate: baseline model showing high accuracy but terrible recall, RandomUnderSampler, SMOTE from imbalanced-learn, class_weight='balanced'. Compare all 4 approaches using Precision-Recall AUC. Show threshold adjustment: how moving from 0.5 to 0.3 decision threshold changes precision/recall tradeoff. End with a guide: when to use each strategy.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">20</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Unsupervised Learning — Clustering & Dimensionality Reduction</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">KMeans</span>
+            <span class="ltag">PCA</span>
+            <span class="ltag">unsupervised</span>
+          </div>
+          <div class="lesson-desc">Not every problem has labels. Clustering and PCA are used for customer segmentation, anomaly detection, and visualising high-dimensional data. PCA also connects directly to your linear algebra coursework.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>K-Means clustering — algorithm, inertia, elbow method for choosing k</li>
+              <li>DBSCAN — density-based clustering that handles irregular shapes</li>
+              <li>PCA — principal components, explained variance, connection to eigenvectors</li>
+              <li>t-SNE — non-linear dimensionality reduction for visualisation</li>
+              <li>Real use case: customer segmentation with K-Means + PCA visualisation</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 20 — Clustering and Dimensionality Reduction". Use the Mall Customer dataset or synthetic make_blobs data. Cover: KMeans with elbow method plot, DBSCAN for irregular clusters, PCA explaining what principal components are (with connection to eigenvectors from linear algebra), using PCA to reduce to 2D and visualise K-Means clusters, then t-SNE comparison. Include a section explicitly connecting PCA to the matrix decomposition concepts Samuel studies in his applied math coursework.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">21</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Model Interpretability — SHAP Values</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">SHAP</span>
+            <span class="ltag">interpretability</span>
+            <span class="ltag">XAI</span>
+          </div>
+          <div class="lesson-desc">Knowing a model's accuracy is not enough — you need to explain why it made each prediction. SHAP is the industry standard for this and is used at companies like Nubank daily.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>What are SHAP values? (game theory foundation — Shapley values)</li>
+              <li>Global feature importance with SHAP summary plot</li>
+              <li>Individual prediction explanation with SHAP waterfall plot</li>
+              <li>SHAP dependence plots — feature interaction effects</li>
+              <li>Using SHAP to detect model bias or unexpected behaviour</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 21 — Model Interpretability with SHAP Values". Use the California Housing dataset with an XGBoost model. Explain SHAP values conceptually (game theory — how much did each feature contribute to this specific prediction vs the baseline). Show: shap.summary_plot (bar and dot), shap.waterfall_plot for one specific prediction, shap.dependence_plot to show interaction between income and house age. End with: how you'd use SHAP to explain a prediction to a non-technical stakeholder.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p3">
+        <div class="lesson-num">22</div>
+        <div class="lesson-body">
+          <div class="lesson-title">⚑ Phase 3 Project — End-to-End Kaggle Competition</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">project</span>
+            <span class="ltag">kaggle</span>
+            <span class="ltag">portfolio</span>
+          </div>
+          <div class="lesson-desc">Enter a real Kaggle competition and document the full process. This is your second pinned portfolio project — and your Kaggle profile starts here.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Competition: Spaceship Titanic or House Prices (Kaggle beginner-friendly)</li>
+              <li>Full pipeline: EDA → feature engineering → Pipeline → XGBoost → tuning → submit</li>
+              <li>Kaggle submission workflow, leaderboard score</li>
+              <li>Write 5 "what I tried and why it didn't work" notes — shows thinking process</li>
+              <li>Publish notebook publicly on Kaggle + link it from your GitHub README</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Project 3 — Kaggle: House Prices End-to-End". Structure as: (1) EDA using the 5-step checklist, (2) Feature engineering: create 5 new features with reasoning for each, (3) sklearn Pipeline with ColumnTransformer for preprocessing, (4) Baseline XGBoost with cross_val_score, (5) RandomizedSearchCV tuning, (6) SHAP summary plot for interpretability, (7) Kaggle submission file generation. Include a section titled "What I tried that didn't work" with 3 placeholder cells for me to fill in.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="checkpoint p3">
+      <strong>Phase 3 checkpoint — before moving on, you should be able to:</strong>
+      Build a full sklearn Pipeline with ColumnTransformer from scratch · Explain the difference between precision and recall without hesitation · Train and tune an XGBoost model · Interpret a SHAP summary plot to a non-technical person · Complete a Kaggle competition submission with a documented process.
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       PHASE 4 — PRODUCTION & DEPTH
+  ══════════════════════════════════════ -->
+  <div class="phase p4">
+    <div class="phase-header">
+      <div class="phase-num">Phase 4</div>
+      <div>
+        <div class="phase-title">Production & Depth</div>
+        <div class="phase-meta">6 notebooks · ~6 hours · what separates juniors from seniors</div>
+      </div>
+      <div class="phase-rule"></div>
+    </div>
+
+    <div class="lessons">
+
+      <div class="lesson p4">
+        <div class="lesson-num">23</div>
+        <div class="lesson-body">
+          <div class="lesson-title">SQL + Pandas — The Analyst's Dual Toolkit</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">SQL</span>
+            <span class="ltag">pandas</span>
+            <span class="ltag">pandasql</span>
+          </div>
+          <div class="lesson-desc">In most companies, data lives in SQL databases. Knowing how to move fluently between SQL and Pandas is a core analyst skill and common in technical interviews.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Side-by-side translation: SQL → Pandas equivalents for every common pattern</li>
+              <li>Window functions in SQL vs <code>groupby().transform()</code> in Pandas</li>
+              <li><code>pandasql</code> — run SQL queries directly on a DataFrame</li>
+              <li>Reading from SQLite with <code>pd.read_sql()</code></li>
+              <li>Writing a DataFrame to a database with <code>.to_sql()</code></li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 23 — SQL and Pandas Side-by-Side". Use pandasql and SQLite. Create a synthetic sales database with 3 tables (orders, customers, products). For each operation, show the SQL version alongside the Pandas equivalent: SELECT with WHERE, GROUP BY with HAVING, JOIN, subquery, and window function (RANK OVER PARTITION). End with: use pd.read_sql() to load from SQLite, run analysis in Pandas, and write result back with .to_sql().
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p4">
+        <div class="lesson-num">24</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Statistical Tests — Hypothesis Testing in Practice</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">statistics</span>
+            <span class="ltag">scipy</span>
+            <span class="ltag">A/B testing</span>
+          </div>
+          <div class="lesson-desc">Your math degree gives you a foundation here that most bootcamp graduates completely lack. This lesson connects your probability coursework to practical hypothesis testing.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>t-test — comparing means of two groups</li>
+              <li>Chi-square test — independence between categorical variables</li>
+              <li>A/B test simulation end-to-end: null hypothesis, p-value, significance</li>
+              <li>Multiple testing problem and Bonferroni correction</li>
+              <li>Effect size — why statistical significance ≠ practical significance</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 24 — Hypothesis Testing and A/B Testing". Simulate an A/B test: two website variants with different conversion rates. Walk through: null hypothesis formulation, t-test with scipy.stats, p-value interpretation, Type I and Type II error, statistical power, and sample size calculation. Show the multiple testing problem with a simulation (run 100 tests, how many false positives?), and Bonferroni correction. Connect p-values to the probability distributions Samuel studies in his UNICAMP coursework.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p4">
+        <div class="lesson-num">25</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Time Series Analysis</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">time series</span>
+            <span class="ltag">forecasting</span>
+            <span class="ltag">statsmodels</span>
+          </div>
+          <div class="lesson-desc">Time series data has unique structure — autocorrelation, trend, seasonality — that breaks standard ML assumptions. This lesson builds the intuition for working with temporal data.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Decomposition: trend, seasonality, residuals with <code>statsmodels</code></li>
+              <li>Autocorrelation (ACF) and partial autocorrelation (PACF) plots</li>
+              <li>Rolling mean and exponential smoothing</li>
+              <li>Feature engineering for time series: lag features, rolling statistics, date features</li>
+              <li>Train/test split for time series (never random split — why?)</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 25 — Time Series Analysis". Use the Air Passengers dataset or a Brazilian economic indicator (IPCA inflation monthly data from IBGE). Cover: plotting with DatetimeIndex, seasonal decomposition with statsmodels, ACF and PACF plots with interpretation, rolling mean and EWM smoothing, creating lag features and rolling statistics as ML features, and proper train/test split (must use time-based split, not random). End with an XGBoost model on the engineered features.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p4">
+        <div class="lesson-num">26</div>
+        <div class="lesson-body">
+          <div class="lesson-title">NLP Fundamentals — Text as Data</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">NLP</span>
+            <span class="ltag">TF-IDF</span>
+            <span class="ltag">text classification</span>
+          </div>
+          <div class="lesson-desc">Text data is everywhere. This lesson covers the classical NLP pipeline that still powers many production systems — and serves as foundation before learning transformers.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Text cleaning: lowercasing, removing punctuation, stopwords</li>
+              <li>Tokenisation, stemming, lemmatisation</li>
+              <li>Bag of Words with <code>CountVectorizer</code></li>
+              <li>TF-IDF with <code>TfidfVectorizer</code> — the math behind it</li>
+              <li>Text classification pipeline: vectorizer + LogisticRegression</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 26 — NLP Fundamentals: Text as Data". Use the SMS Spam dataset (available on Kaggle or sklearn). Cover: text cleaning with regex and NLTK, CountVectorizer showing the bag-of-words matrix, TF-IDF with the mathematical formula (term frequency × inverse document frequency), a full Pipeline with TfidfVectorizer + LogisticRegression for spam classification, and evaluation with the classification report. Show the top words by TF-IDF weight for spam vs ham messages.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p4">
+        <div class="lesson-num">27</div>
+        <div class="lesson-body">
+          <div class="lesson-title">Deploying a Model — FastAPI + Streamlit</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">deployment</span>
+            <span class="ltag">FastAPI</span>
+            <span class="ltag">Streamlit</span>
+          </div>
+          <div class="lesson-desc">A model nobody can use is just a file. Deployment is what turns a notebook into something that appears on your CV as "built and deployed X". This is rare among junior candidates.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Saving and loading a trained model with <code>joblib</code></li>
+              <li>Building a prediction endpoint with FastAPI</li>
+              <li>Building a UI with Streamlit — sliders, inputs, output display</li>
+              <li>Connecting the Streamlit frontend to the FastAPI backend</li>
+              <li>Deploying Streamlit app to Streamlit Community Cloud (free, public URL)</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Lesson 27 — Deploying a Model with FastAPI and Streamlit". Use the California Housing model (RandomForest or XGBoost). Show: (1) training and saving the model with joblib, (2) a FastAPI app.py that loads the model and exposes a /predict endpoint accepting JSON features, (3) a streamlit_app.py with sliders for each feature and a Predict button that calls the FastAPI endpoint, (4) instructions to deploy the Streamlit app to Streamlit Community Cloud for a public URL. Include all code as separate code cells that can be saved to individual files.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson p4">
+        <div class="lesson-num">28</div>
+        <div class="lesson-body">
+          <div class="lesson-title">⚑ Final Project — Full Data Science Case Study</div>
+          <div class="lesson-tags">
+            <span class="ltag hl">project</span>
+            <span class="ltag">deployed</span>
+            <span class="ltag">portfolio</span>
+          </div>
+          <div class="lesson-desc">Your flagship portfolio piece. This should be something you can walk a recruiter through in 5 minutes — start to deployed app. This is what gets you interviews.</div>
+          <div class="lesson-covers">
+            <h4>Covers</h4>
+            <ul>
+              <li>Pick a real problem with real Brazilian data (IBGE, dados.gov.br, or a sector you care about)</li>
+              <li>EDA notebook → Feature engineering → Model → SHAP interpretability → Deployment</li>
+              <li>Deployed Streamlit app with a public URL</li>
+              <li>GitHub repo with: README (problem, method, findings, live link), requirements.txt, clean notebooks</li>
+              <li>LinkedIn post: "I built X. Here's what I found. Here's the live demo." (link to repo + app)</li>
+            </ul>
+          </div>
+          <div class="lesson-prompt">
+            <strong>AI prompt to generate this notebook</strong>
+            Create a Jupyter notebook titled "Final Project — [Your Topic] Data Science Case Study". Structure it as: (1) Problem statement and dataset source, (2) EDA using the 5-step checklist with 5 key visualisations, (3) Feature engineering with reasoning, (4) Model selection: compare at least 2 models with cross_val_score, (5) Hyperparameter tuning of the best model, (6) SHAP interpretability, (7) Business conclusions in plain language, (8) Instructions for running the Streamlit deployment. This notebook should serve as the documentation for the full project.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="checkpoint p4">
+      <strong>Phase 4 checkpoint — you are job-ready when you can:</strong>
+      Write a SQL query and translate it to Pandas (and back) · Design an A/B test with correct sample size and explain p-values · Handle time series data without random-splitting it · Deploy a working prediction app with a public URL · Present your final project to a recruiter in 5 minutes.
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>
